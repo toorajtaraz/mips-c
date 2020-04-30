@@ -46,12 +46,27 @@ void get_input()
     scanf("%33s", program_memory);
     program_memory[32] = '\0';
 }
-void alu(int alu_fun, uint8_t address1, uint8_t address2)
+void alu(int alu_fun, int address1, int address2, int dist)
 {
 }
 
-void alui(int alu_fun, uint8_t address1, uint32_t immidiate)
+void alui(int alu_fun, int address1, uint32_t immidiate)
 {
+}
+
+int get_addres(int start_p, int bound)
+{
+    char *start = &program_memory[start_p];
+    int total = 0;
+    int i = 0;
+    while (i < bound)
+    {
+        total <<= 1;
+        if (*start++ == '1')
+            total ^= 1;
+        i++;
+    }
+    return total;
 }
 void control_unit()
 {
@@ -61,27 +76,27 @@ void control_unit()
         //ADD
         if (program_memory[26] == '1' && program_memory[27] == '0' && program_memory[28] == '0' && program_memory[29] == '0' && program_memory[30] == '0' && program_memory[31] == '0')
         {
-            /* code */
+            alu(ADD, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //SUB
         if (program_memory[26] == '1' && program_memory[27] == '0' && program_memory[28] == '0' && program_memory[29] == '0' && program_memory[30] == '1' && program_memory[31] == '0')
         {
-            /* code */
+            alu(SUB, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //OR
         if (program_memory[26] == '1' && program_memory[27] == '0' && program_memory[28] == '0' && program_memory[29] == '1' && program_memory[30] == '1' && program_memory[31] == '0')
         {
-            /* code */
+            alu(OR, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //AND
         if (program_memory[26] == '1' && program_memory[27] == '0' && program_memory[28] == '0' && program_memory[29] == '1' && program_memory[30] == '0' && program_memory[31] == '0')
         {
-            /* code */
+            alu(AND, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //SLT
         if (program_memory[26] == '1' && program_memory[27] == '0' && program_memory[28] == '1' && program_memory[29] == '0' && program_memory[30] == '1' && program_memory[31] == '0')
         {
-            /* code */
+            alu(SLT, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
     }
     //I type
