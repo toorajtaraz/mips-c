@@ -16,3 +16,18 @@
  * =====================================================================================
  */
 
+#include <stdint.h>
+
+typedef unsigned char byte;
+typedef enum
+{
+    ADD,
+    SUB,
+    OR,
+    AND,
+    SLT,
+    ADDI,
+    SLTI,
+    ANDI,
+    ORI,
+} alu_op;
