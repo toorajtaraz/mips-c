@@ -56,7 +56,7 @@ void alui(int alu_fun, int address1, int address2, int32_t immidiate)
 
 int get_addres(int start_p, int bound)
 {
-    char *start = &program_memory[start_p];
+    char *start = (char*) &program_memory[start_p];
     int total = 0;
     int i = 0;
     while (i < bound)
