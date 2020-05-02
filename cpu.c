@@ -237,22 +237,26 @@ void control_unit()
     //ADDI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '0' && program_memory[4] == '0' && program_memory[5] == '0')
     {
-        alui(ADDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        int temp = handle_2c(16, 16);
+        alui(ADDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //SLTI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '0' && program_memory[4] == '1' && program_memory[5] == '0')
     {
-        alui(SLTI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        int temp = handle_2c(16, 16);
+        alui(SLTI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //ANDI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '0')
     {
+        int temp = handle_2c(16, 16);
         alui(ANDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ORI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '1')
     {
-        alui(ORI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        int temp = handle_2c(16, 16);
+        alui(ORI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //BEQ
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '0' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '0')
