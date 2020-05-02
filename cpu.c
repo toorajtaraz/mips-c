@@ -22,8 +22,8 @@
 #include <stdbool.h>
 bool overflow = false;
 uint32_t reg[33];
-byte *all_program_memories[100];
-uint32_t data_memory[100];
+byte *all_program_memories[33];
+uint32_t data_memory[1000];
 int program_counter = 0;
 void init()
 {
@@ -141,15 +141,22 @@ void lw(int source, int target, int offset)
 }
 void beq(int source, int target, int goto_add)
 {
+    if (source == target)
+    {
+        program_counter = goto_add;
+    }
     
 }
 void bne(int source, int target, int goto_add)
 {
-
+    if (source != target)
+    {
+        program_counter = goto_add + 1;
+    }
 }
 void jump(int addres)
 {
-
+    program_counter = addres;
 }
 int handle_2c (int start_p, int bound)
 {
