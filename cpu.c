@@ -23,6 +23,7 @@
 bool overflow = false;
 uint32_t reg[32];
 byte program_memory[100];
+byte *all_program_memories[100];
 uint32_t data_memory[100];
 int program_counter = 0;
 void init()
@@ -139,6 +140,7 @@ void lw(int source, int target, int offset)
 }
 void beq(int source, int target, int goto_add)
 {
+    
 }
 void bne(int source, int target, int goto_add)
 {
@@ -229,7 +231,14 @@ void control_unit()
 void sign_extender()
 {
 }
-
+void general_handler (int number_of_commands)
+{
+    for (int i = 0; i < number_of_commands; i++)
+    {
+        all_program_memories[i] =  calloc(100, sizeof(byte));
+    }
+    
+}
 int main()
 {
 }
