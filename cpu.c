@@ -50,7 +50,7 @@ void alu(int alu_fun, int address1, int address2, int dist)
 {
 }
 
-void alui(int alu_fun, int address1, uint32_t immidiate)
+void alui(int alu_fun, int address1, int address2, int32_t immidiate)
 {
 }
 
@@ -67,6 +67,21 @@ int get_addres(int start_p, int bound)
         i++;
     }
     return total;
+}
+void sw(int source, int target, int offset)
+{
+}
+void lw(int source, int target, int offset)
+{
+}
+void beq(int source, int target, int goto_add)
+{
+}
+void bne(int source, int target, int goto_add)
+{
+}
+void jump(int addres)
+{
 }
 void control_unit()
 {
@@ -103,39 +118,48 @@ void control_unit()
     //SW
     if (program_memory[0] == '1' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '0' && program_memory[4] == '1' && program_memory[5] == '1')
     {
+        sw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 12));
     }
     //LW
     if (program_memory[0] == '1' && program_memory[1] == '0' && program_memory[2] == '0' && program_memory[3] == '0' && program_memory[4] == '1' && program_memory[5] == '1')
     {
+        lw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ADDI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '0' && program_memory[4] == '0' && program_memory[5] == '0')
     {
+        alui(ADDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //SLTI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '0' && program_memory[4] == '1' && program_memory[5] == '0')
     {
+        alui(SLTI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ANDI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '0')
     {
+        alui(ANDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ORI
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '1' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '1')
     {
+        alui(ORI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //BEQ
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '0' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '0')
     {
+        beq(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //BNE
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '0' && program_memory[3] == '1' && program_memory[4] == '0' && program_memory[5] == '1')
     {
+        bne(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //J type
     //J
     if (program_memory[0] == '0' && program_memory[1] == '0' && program_memory[2] == '0' && program_memory[3] == '0' && program_memory[4] == '1' && program_memory[5] == '0')
     {
+        jump(get_addres(6, 26));
     }
 }
 
