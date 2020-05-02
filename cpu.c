@@ -131,9 +131,11 @@ int get_addres(int start_p, int bound)
 }
 void sw(int source, int target, int offset)
 {
+    data_memory[source + offset] = reg[target];
 }
 void lw(int source, int target, int offset)
 {
+    
 }
 void beq(int source, int target, int goto_add)
 {
