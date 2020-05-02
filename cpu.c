@@ -22,8 +22,8 @@
 #include <stdbool.h>
 bool overflow = false;
 uint32_t reg[32];
-byte program_memory[33];
-byte data_memory[33];
+byte program_memory[100];
+uint32_t data_memory[100];
 int program_counter = 0;
 void init()
 {
@@ -33,7 +33,7 @@ void init()
         reg[i] = -1;
     }
     overflow = false;
-    for (int i = 0; i < 33; i++)
+    for (int i = 0; i < 100; i++)
     {
         program_memory[i] = -1;
         data_memory[i] = -1;
