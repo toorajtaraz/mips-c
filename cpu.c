@@ -135,7 +135,7 @@ void sw(int source, int target, int offset)
 }
 void lw(int source, int target, int offset)
 {
-    
+    reg[target] = data_memory[source + offset];
 }
 void beq(int source, int target, int goto_add)
 {
