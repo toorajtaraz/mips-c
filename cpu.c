@@ -35,7 +35,7 @@ void init()
     overflow = false;
     for (int i = 0; i < 100; i++)
     {
-        program_memory[i] = -1;
+        program_memory[i] = 0;
         data_memory[i] = -1;
     }
     program_counter = 0;
@@ -48,6 +48,39 @@ void get_input()
 }
 void alu(int alu_fun, int address1, int address2, int dist)
 {
+    if (alu_fun == ADD)
+    {
+        reg[dist] = reg[address1] + reg[address2];
+        return;
+    }
+    if (alu_fun == SUB)
+    {
+        reg[dist] = reg[address1] - reg[address2];
+        return;
+    }
+    if (alu_fun == AND)
+    {
+        reg[dist] = reg[address1] & reg[address2];
+        return;
+    }
+    if (alu_fun == OR)
+    {
+        reg[dist] = reg[address1] | reg[address2];
+        return;
+    }
+    if (alu_fun == SLT)
+    {
+        if (reg[address1] < reg[address2])
+        {
+            reg[dist] = 1;
+        }
+        else
+        {
+            reg[dist] = 0;
+        }
+        
+        return;
+    }
 }
 
 void alui(int alu_fun, int address1, int address2, int32_t immidiate)
