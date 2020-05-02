@@ -85,6 +85,34 @@ void alu(int alu_fun, int address1, int address2, int dist)
 
 void alui(int alu_fun, int address1, int address2, int32_t immidiate)
 {
+    if (alu_fun == ADDI)
+    {
+        reg[address2] = reg[address1] + immidiate;
+        return;
+    }
+    if (alu_fun == ANDI)
+    {
+        reg[address2] = reg[address1] & immidiate;
+        return;
+    }
+    if (alu_fun == ORI)
+    {
+        reg[address2] = reg[address1] | immidiate;
+        return;
+    }
+    if (alu_fun == SLTI)
+    {
+        if (reg[address1] < immidiate)
+        {
+            reg[address2] = 1;
+        }
+        else
+        {
+            reg[address2] = 0;
+        }
+        
+        return;
+    }
 }
 
 int get_addres(int start_p, int bound)
