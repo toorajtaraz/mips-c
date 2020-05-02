@@ -148,6 +148,50 @@ void bne(int source, int target, int goto_add)
 void jump(int addres)
 {
 }
+int handle_2c (int start_p, int bound)
+{
+    if (program_memory[start_p] == '0')
+    {
+        return 1;
+    }
+    
+    char *start = (char*) &program_memory[start_p];
+    int total = 0;
+    int i = 0;
+    while (i < bound)
+    {
+        if (start[i] == '1')
+            start[i] = '0';
+        else
+            start[i] = '1';
+        i++;
+    }
+    i--;
+    bool cary = false;
+    if (start[i] == '0')
+    {
+        start[i] = '1';
+        return -1;
+    }
+    else 
+        cary = true; 
+    i--;
+    while (i >= 0 && cary)
+    {
+        if (start[i] == '0')
+        {
+            start[i] = '1';
+            cary = false;
+        }
+        else
+        {
+            start[i] = '0';
+        }
+        i--; 
+    }
+    
+    return -1;
+}
 void control_unit()
 {
     //R type
