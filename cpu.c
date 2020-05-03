@@ -25,12 +25,13 @@ uint32_t reg[33];
 byte *all_program_memories[33];
 uint32_t data_memory[1000];
 int program_counter = 0;
+int number_of_commands;
 void init()
 {
     reg[0] = 0;
     for (int i = 1; i < 32; i++)
     {
-        reg[i] = -1;
+        reg[i] = 0;
     }
     overflow = false;
     for (int i = 0; i < 100; i++)
@@ -39,14 +40,13 @@ void init()
     }
     program_counter = 0;
 }
-void general_handler(int number_of_commands);
+void general_handler();
 void get_input()
 {
-    int n;
-    scanf("%d",&n);
-    general_handler(n);
-    for (int i = 0; i < n; i++)
-        scanf("%32s\n", all_program_memories[i]);
+    scanf("%d",&number_of_commands);
+    general_handler();
+    for (int i = 0; i < number_of_commands; i++)
+        scanf("%32s", all_program_memories[i]);
 }
 void alu(int alu_fun, int address1, int address2, int dist)
 {
@@ -156,7 +156,7 @@ void bne(int source, int target, int goto_add)
 }
 void jump(int addres)
 {
-    program_counter = addres;
+    program_counter = addres - 1;
 }
 int handle_2c (int start_p, int bound)
 {
@@ -286,10 +286,7 @@ void control_unit()
     }
 }
 
-void sign_extender()
-{
-}
-void general_handler (int number_of_commands)
+void general_handler ()
 {
     for (int i = 0; i < number_of_commands; i++)
     {
@@ -299,4 +296,13 @@ void general_handler (int number_of_commands)
 }
 int main()
 {
+    init();
+    get_input();
+    for (int i = 0; i < number_of_commands; i++)
+    {
+        control_unit();
+        program_counter++;
+    }
+    
+    return 0;
 }
