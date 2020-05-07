@@ -36,7 +36,12 @@ int get_addres(char *start, int start_p, int bound)
 }
 void decToBinary(int n, char *start, int bits)
 {
-    // Size of an integer is assumed to be 32 bits
+    int flag = 0;
+    if (n < 0)
+    {
+        flag = 1;
+        n *= -1;
+    }
     int count = 0;
     for (int i = bits - 1; i >= 0; i--)
     {
@@ -46,6 +51,22 @@ void decToBinary(int n, char *start, int bits)
         else
             start[count] = '0';
         count++;
+    }
+    int first_one;
+    for (first_one = bits - 1; first_one >= 0; first_one--)
+        if (start[first_one] == '1')
+            break;
+    if (first_one < 0)
+    {
+        return;
+    }
+    
+    for (int i = first_one; i >= 0; i--)
+    {
+        if (start[i] == '1') 
+            start[i] = '0'; 
+        else
+            start[i] = '1'; 
     }
 }
 int reg_num(char *str1)
@@ -184,7 +205,7 @@ void print_final(char *final)
 {
     for (int i = 0; i < 32; i++)
     {
-        printf("%c",final[i]);
+        printf("%c", final[i]);
     }
 }
 void print_single_command(char *cmd)
@@ -263,10 +284,11 @@ void print_single_command(char *cmd)
         i++;
         par3[1] = cmd[i];
         i++;
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par3),&final[11],5);
-        decToBinary(reg_num(par1),&final[16],5);
-        print_final(final);return;
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par3), &final[11], 5);
+        decToBinary(reg_num(par1), &final[16], 5);
+        print_final(final);
+        return;
     }
     if (strcmp(type, SUB) == 0)
     {
@@ -308,10 +330,11 @@ void print_single_command(char *cmd)
         i++;
         par3[1] = cmd[i];
         i++;
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par3),&final[11],5);
-        decToBinary(reg_num(par1),&final[16],5);
-        print_final(final);return;
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par3), &final[11], 5);
+        decToBinary(reg_num(par1), &final[16], 5);
+        print_final(final);
+        return;
     }
     if (strcmp(type, OR) == 0)
     {
@@ -353,10 +376,11 @@ void print_single_command(char *cmd)
         i++;
         par3[1] = cmd[i];
         i++;
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par3),&final[11],5);
-        decToBinary(reg_num(par1),&final[16],5);
-        print_final(final);return;
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par3), &final[11], 5);
+        decToBinary(reg_num(par1), &final[16], 5);
+        print_final(final);
+        return;
     }
     if (strcmp(type, AND) == 0)
     {
@@ -398,10 +422,11 @@ void print_single_command(char *cmd)
         i++;
         par3[1] = cmd[i];
         i++;
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par3),&final[11],5);
-        decToBinary(reg_num(par1),&final[16],5);
-        print_final(final);return;
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par3), &final[11], 5);
+        decToBinary(reg_num(par1), &final[16], 5);
+        print_final(final);
+        return;
     }
     if (strcmp(type, SLT) == 0)
     {
@@ -443,10 +468,11 @@ void print_single_command(char *cmd)
         i++;
         par3[1] = cmd[i];
         i++;
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par3),&final[11],5);
-        decToBinary(reg_num(par1),&final[16],5);
-        print_final(final);return;
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par3), &final[11], 5);
+        decToBinary(reg_num(par1), &final[16], 5);
+        print_final(final);
+        return;
     }
     if (strcmp(type, J) == 0)
     {
@@ -483,7 +509,8 @@ void print_single_command(char *cmd)
         final[29] = cmd[29];
         final[30] = cmd[30];
         final[31] = cmd[31];
-        print_final(final);return;
+        print_final(final);
+        return;
     }
     if (strcmp(type, SW) == 0)
     {
@@ -515,15 +542,16 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, LW) == 0)
     {
@@ -555,15 +583,16 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, ADDI) == 0)
     {
@@ -590,7 +619,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -599,12 +628,13 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, SLTI) == 0)
     {
@@ -631,7 +661,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -640,12 +670,13 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, ANDI) == 0)
     {
@@ -672,7 +703,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -681,12 +712,13 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, ORI) == 0)
     {
@@ -713,7 +745,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -722,12 +754,13 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par2),&final[6],5);
-        decToBinary(reg_num(par1),&final[11],5);
+        decToBinary(reg_num(par2), &final[6], 5);
+        decToBinary(reg_num(par1), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, BEQ) == 0)
     {
@@ -754,7 +787,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -763,12 +796,13 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par1),&final[6],5);
-        decToBinary(reg_num(par2),&final[11],5);
+        decToBinary(reg_num(par1), &final[6], 5);
+        decToBinary(reg_num(par2), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
     if (strcmp(type, BNE) == 0)
     {
@@ -795,7 +829,7 @@ void print_single_command(char *cmd)
         while (cmd[i] == ' ')
         {
             i++;
-        } 
+        }
         char num[10] = {'\0'};
         int j = 0;
         while (cmd[i] != ' ')
@@ -804,14 +838,14 @@ void print_single_command(char *cmd)
             j++;
             i++;
         }
-        decToBinary(reg_num(par1),&final[6],5);
-        decToBinary(reg_num(par2),&final[11],5);
+        decToBinary(reg_num(par1), &final[6], 5);
+        decToBinary(reg_num(par2), &final[11], 5);
         int n;
-        sscanf(num,"%d",&n);
-        decToBinary(n,&final[16],16);
-        print_final(final);return;
+        sscanf(num, "%d", &n);
+        decToBinary(n, &final[16], 16);
+        print_final(final);
+        return;
     }
 
-    
     //puts(final);
 }
