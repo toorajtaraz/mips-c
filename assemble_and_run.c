@@ -71,9 +71,10 @@ int main()
     {
         print_single_command(cmd,final[k++]);
     }
+    fclose(file);
     puts("\n\n");
     puts("start running...\n");
-    run(final, lines);
+    run(final, lines + 1);
     
     return 0;
 }
