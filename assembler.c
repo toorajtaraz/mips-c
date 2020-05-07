@@ -837,6 +837,5 @@ char *print_single_command(char *cmd, char *final)
         print_final(final);
         return final;
     }
-
-    //puts(final);
+    return final;
 }
