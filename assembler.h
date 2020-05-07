@@ -17,20 +17,21 @@
  */
 
 
-#define ADD "add"
-#define SUB "sub"
-#define OR "or "
-#define AND "and"
-#define SLT "slt"
-#define J "j  "
-#define SW "sw"
-#define LW "lw"
-#define ADDI "addi"
-#define SLTI "slti"
-#define ANDI "andi"
-#define ORI "ori"
-#define BEQ "beq"
-#define BNE "bne"
+
+#define ADD "add\0"
+#define SUB "sub\0"
+#define OR "or\0"
+#define AND "and\0"
+#define SLT "slt\0"
+#define J "j\0"
+#define SW "sw\0"
+#define LW "lw\0"
+#define ADDI "addi\0"
+#define SLTI "slti\0"
+#define ANDI "andi\0"
+#define ORI "ori\0"
+#define BEQ "beq\0"
+#define BNE "bne\0"
 
 #define zero 0
 #define at 1

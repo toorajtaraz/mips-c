@@ -294,7 +294,7 @@ void general_handler ()
     }
     
 }
-int main()
+int run()
 {
     init();
     get_input();
