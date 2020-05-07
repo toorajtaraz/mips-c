@@ -31,5 +31,3 @@ typedef enum
     ANDI,
     ORI,
 } alu_op;
-
-int run();

@@ -22,7 +22,7 @@
 #include <stdbool.h>
 bool overflow = false;
 uint32_t reg[33];
-byte *all_program_memories[33];
+char **all_program_memories;
 uint32_t data_memory[1000];
 int program_counter = 0;
 int number_of_commands;
@@ -210,26 +210,31 @@ void control_unit()
         //ADD
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '0' && all_program_memories[program_counter][30] == '0' && all_program_memories[program_counter][31] == '0')
         {
+            puts("doing ADD...\n");
             alu(ADD, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //SUB
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '0' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
+            puts("doing SUB...\n");
             alu(SUB, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //OR
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '1' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
+            puts("doing OR...\n");
             alu(OR, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //AND
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '1' && all_program_memories[program_counter][30] == '0' && all_program_memories[program_counter][31] == '0')
         {
+            puts("doing AND...\n");
             alu(AND, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
         //SLT
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '1' && all_program_memories[program_counter][29] == '0' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
+            puts("doing SLT...\n");
             alu(SLT, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
         }
     }
@@ -237,51 +242,60 @@ void control_unit()
     //SW
     if (all_program_memories[program_counter][0] == '1' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '1')
     {
+        puts("doing SW...\n");
         sw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 12));
     }
     //LW
     if (all_program_memories[program_counter][0] == '1' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '1')
     {
+        puts("doing LW...\n");
         lw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ADDI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
     {
+        puts("doing ADDI...\n");
         int temp = handle_2c(16, 16);
         alui(ADDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //SLTI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '0')
     {
+        puts("doing SLTI...\n");
         int temp = handle_2c(16, 16);
         alui(SLTI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //ANDI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
     {
+        puts("doing ANDI...\n");
         int temp = handle_2c(16, 16);
         alui(ANDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //ORI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '1')
     {
+        puts("doing ORI...\n");
         int temp = handle_2c(16, 16);
         alui(ORI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
     }
     //BEQ
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
     {
+        puts("doing BEQ...\n");
         beq(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //BNE
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '1')
     {
+        puts("doing BNE...\n");
         bne(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
     }
     //J type
     //J
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '0')
     {
+        puts("doing J...\n");
         jump(get_addres(6, 26));
     }
 }
@@ -294,15 +308,16 @@ void general_handler ()
     }
     
 }
-int run()
+int run(char **cmd, int number_of_cmd)
 {
     init();
-    get_input();
+    //get_input();
+    number_of_commands = number_of_cmd;
+    all_program_memories = cmd;
     for (int i = 0; i < number_of_commands; i++)
     {
         control_unit();
         program_counter++;
     }
-    
     return 0;
 }
