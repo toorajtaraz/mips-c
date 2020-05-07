@@ -21,7 +21,6 @@
 #include <string.h>
 #include "./assembler.h"
 
-
 void decToBinary(int n, char *start, int bits)
 {
     int flag = 0;
@@ -40,21 +39,38 @@ void decToBinary(int n, char *start, int bits)
             start[count] = '0';
         count++;
     }
-    int first_one;
-    for (first_one = bits - 1; first_one >= 0; first_one--)
-        if (start[first_one] == '1')
-            break;
-    if (first_one < 0)
+    if (flag)
     {
-        return;
-    }
-    
-    for (int i = first_one; i >= 0; i--)
-    {
-        if (start[i] == '1') 
-            start[i] = '0'; 
-        else
-            start[i] = '1'; 
+        char onesComp[bits+1];
+        int carry = 1;
+        for (int i = 0; i < bits; i++)
+        {
+            if (start[i] == '1')
+            {
+                onesComp[i] = '0';
+            }
+            else if (start[i] == '0')
+            {
+                onesComp[i] = '1';
+            }
+        }
+        onesComp[bits] = '\0';
+        for (int i = bits - 1; i >= 0; i--)
+        {
+            if (onesComp[i] == '1' && carry == 1)
+            {
+                start[i] = '0';
+            }
+            else if (onesComp[i] == '0' && carry == 1)
+            {
+                start[i] = '1';
+                carry = 0;
+            }
+            else
+            {
+                start[i] = onesComp[i];
+            }
+        }
     }
 }
 int reg_num(char *str1)
@@ -212,7 +228,7 @@ char *print_single_command(char *cmd, char *final)
     par3[2] = '\0';
     int imm;
     int i = 0;
-    while (i<32 && cmd[i] != ' ')
+    while (i < 32 && cmd[i] != ' ')
     {
         i++;
     }
@@ -225,7 +241,7 @@ char *print_single_command(char *cmd, char *final)
     }
     puts("\n\n");
     i++;
-    while (i<32 && cmd[i] == ' ')
+    while (i < 32 && cmd[i] == ' ')
     {
         i++;
     }
@@ -253,7 +269,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par1[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -261,7 +277,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -299,7 +315,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par1[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -307,7 +323,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -345,7 +361,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par1[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -353,7 +369,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -391,7 +407,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par1[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -399,7 +415,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -437,7 +453,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par1[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -445,7 +461,7 @@ char *print_single_command(char *cmd, char *final)
         i++;
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -468,13 +484,13 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '0';
         final[4] = '1';
         final[5] = '0';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -495,25 +511,25 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '0';
         final[4] = '1';
         final[5] = '1';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
             i++;
         }
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -536,25 +552,25 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '0';
         final[4] = '1';
         final[5] = '1';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
             i++;
         }
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
@@ -577,26 +593,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '0';
         final[4] = '0';
         final[5] = '0';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -606,6 +622,7 @@ char *print_single_command(char *cmd, char *final)
         decToBinary(reg_num(par1), &final[11], 5);
         int n;
         sscanf(num, "%d", &n);
+        printf("addi read = %d\n\n", n);
         decToBinary(n, &final[16], 16);
         print_final(final);
         return final;
@@ -619,26 +636,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '0';
         final[4] = '1';
         final[5] = '0';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -661,26 +678,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '1';
         final[4] = '0';
         final[5] = '0';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -703,26 +720,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '1';
         final[4] = '0';
         final[5] = '1';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -745,26 +762,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '1';
         final[4] = '0';
         final[5] = '0';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;
@@ -787,26 +804,26 @@ char *print_single_command(char *cmd, char *final)
         final[3] = '1';
         final[4] = '0';
         final[5] = '1';
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par1[0] = cmd[i++];
         par1[1] = cmd[i++];
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         par2[0] = cmd[i++];
         par2[1] = cmd[i];
         i++;
-        while (i<32 && cmd[i] == ' ')
+        while (i < 32 && cmd[i] == ' ')
         {
             i++;
         }
         char num[10] = {'\0'};
         int j = 0;
-        while (i<32 && cmd[i] != ' ')
+        while (i < 32 && cmd[i] != ' ')
         {
             num[j] = cmd[i];
             j++;

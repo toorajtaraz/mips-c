@@ -21,9 +21,9 @@
 #include "data_types.h"
 #include <stdbool.h>
 bool overflow = false;
-uint32_t reg[33];
+int32_t reg[33];
 char **all_program_memories;
-uint32_t data_memory[1000];
+int32_t data_memory[1000];
 int program_counter = 0;
 int number_of_commands;
 void init()
@@ -133,25 +133,25 @@ int get_addres(int start_p, int bound)
 }
 void sw(int source, int target, int offset)
 {
-    data_memory[source + offset] = reg[target];
+    data_memory[reg[source] + offset] = reg[target];
 }
 void lw(int source, int target, int offset)
 {
-    reg[target] = data_memory[source + offset];
+    reg[target] = data_memory[reg[source] + offset];
 }
 void beq(int source, int target, int goto_add)
 {
-    if (source == target)
+    if (reg[source] == reg[target])
     {
-        program_counter = goto_add;
+        program_counter = goto_add - 1;
     }
     
 }
 void bne(int source, int target, int goto_add)
 {
-    if (source != target)
+    if (reg[source] != reg[target])
     {
-        program_counter = goto_add + 1;
+        program_counter = goto_add - 1;
     }
 }
 void jump(int addres)
@@ -212,30 +212,35 @@ void control_unit()
         {
             puts("doing ADD...\n");
             alu(ADD, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
+            return;
         }
         //SUB
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '0' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
             puts("doing SUB...\n");
             alu(SUB, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
+            return;
         }
         //OR
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '1' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
             puts("doing OR...\n");
             alu(OR, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
+            return;
         }
         //AND
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '0' && all_program_memories[program_counter][29] == '1' && all_program_memories[program_counter][30] == '0' && all_program_memories[program_counter][31] == '0')
         {
             puts("doing AND...\n");
             alu(AND, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
+            return;
         }
         //SLT
         if (all_program_memories[program_counter][26] == '1' && all_program_memories[program_counter][27] == '0' && all_program_memories[program_counter][28] == '1' && all_program_memories[program_counter][29] == '0' && all_program_memories[program_counter][30] == '1' && all_program_memories[program_counter][31] == '0')
         {
             puts("doing SLT...\n");
             alu(SLT, get_addres(6, 5), get_addres(11, 5), get_addres(16, 5));
+            return;
         }
     }
     //I type
@@ -243,13 +248,15 @@ void control_unit()
     if (all_program_memories[program_counter][0] == '1' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '1')
     {
         puts("doing SW...\n");
-        sw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 12));
+        sw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        return;
     }
     //LW
     if (all_program_memories[program_counter][0] == '1' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '1')
     {
         puts("doing LW...\n");
         lw(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        return;
     }
     //ADDI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
@@ -257,6 +264,7 @@ void control_unit()
         puts("doing ADDI...\n");
         int temp = handle_2c(16, 16);
         alui(ADDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
+        return;
     }
     //SLTI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '0' && all_program_memories[program_counter][4] == '1' && all_program_memories[program_counter][5] == '0')
@@ -264,6 +272,7 @@ void control_unit()
         puts("doing SLTI...\n");
         int temp = handle_2c(16, 16);
         alui(SLTI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
+        return;
     }
     //ANDI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
@@ -271,6 +280,7 @@ void control_unit()
         puts("doing ANDI...\n");
         int temp = handle_2c(16, 16);
         alui(ANDI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        return;
     }
     //ORI
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '1' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '1')
@@ -278,18 +288,21 @@ void control_unit()
         puts("doing ORI...\n");
         int temp = handle_2c(16, 16);
         alui(ORI, get_addres(6, 5), get_addres(11, 5), get_addres(16, 16) * temp);
+        return;
     }
     //BEQ
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '0')
     {
         puts("doing BEQ...\n");
         beq(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        return;
     }
     //BNE
     if (all_program_memories[program_counter][0] == '0' && all_program_memories[program_counter][1] == '0' && all_program_memories[program_counter][2] == '0' && all_program_memories[program_counter][3] == '1' && all_program_memories[program_counter][4] == '0' && all_program_memories[program_counter][5] == '1')
     {
         puts("doing BNE...\n");
         bne(get_addres(6, 5), get_addres(11, 5), get_addres(16, 16));
+        return;
     }
     //J type
     //J
@@ -297,6 +310,7 @@ void control_unit()
     {
         puts("doing J...\n");
         jump(get_addres(6, 26));
+        return;
     }
 }
 
@@ -308,15 +322,24 @@ void general_handler ()
     }
     
 }
+void print_reg()
+{
+    puts("printing reg...\n\n");
+    for (int i = 0; i < 32; i++)
+    {
+        printf("register %d value is %d\n",i,reg[i]);
+    }
+    
+}
 int run(char **cmd, int number_of_cmd)
 {
     init();
     number_of_commands = number_of_cmd;
     all_program_memories = cmd;
-    for (int i = 0; i < number_of_commands; i++)
+    for (; program_counter < number_of_commands; program_counter++)
     {
         control_unit();
-        program_counter++;
     }
+    print_reg();
     return 0;
 }
