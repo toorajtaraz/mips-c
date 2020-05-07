@@ -143,7 +143,7 @@ void beq(int source, int target, int goto_add)
 {
     if (reg[source] == reg[target])
     {
-        program_counter = goto_add - 1;
+        program_counter = goto_add ;
     }
     
 }
@@ -151,12 +151,12 @@ void bne(int source, int target, int goto_add)
 {
     if (reg[source] != reg[target])
     {
-        program_counter = goto_add - 1;
+        program_counter = goto_add ;
     }
 }
 void jump(int addres)
 {
-    program_counter = addres - 1;
+    program_counter = addres ;
 }
 int handle_2c (int start_p, int bound)
 {

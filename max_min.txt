@@ -44,14 +44,14 @@ sw t1 0 t2
 addi t0 t0 1
 addi t0 ze 0
 slti t3 t0 10
-beq t3 ze 58
+beq t3 ze 57
 add t1 t0 s2
 lw t2 0 t1
 slt t3 t2 s0
-beq t3 ze 52
+beq t3 ze 51
 add s0 ze t2
 slt t3 s1 t2
-beq t3 ze 55
+beq t3 ze 54
 add s1 ze t2
 addi t0 t0 1
-j 45
+j 44
