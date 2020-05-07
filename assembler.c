@@ -622,7 +622,6 @@ char *print_single_command(char *cmd, char *final)
         decToBinary(reg_num(par1), &final[11], 5);
         int n;
         sscanf(num, "%d", &n);
-        printf("addi read = %d\n\n", n);
         decToBinary(n, &final[16], 16);
         print_final(final);
         return final;
