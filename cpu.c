@@ -311,7 +311,6 @@ void general_handler ()
 int run(char **cmd, int number_of_cmd)
 {
     init();
-    //get_input();
     number_of_commands = number_of_cmd;
     all_program_memories = cmd;
     for (int i = 0; i < number_of_commands; i++)
