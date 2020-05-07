@@ -494,9 +494,12 @@ void print_single_command(char *cmd)
         final[3] = '0';
         final[4] = '1';
         final[5] = '1';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -531,9 +534,12 @@ void print_single_command(char *cmd)
         final[3] = '0';
         final[4] = '1';
         final[5] = '1';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -568,9 +574,12 @@ void print_single_command(char *cmd)
         final[3] = '0';
         final[4] = '0';
         final[5] = '0';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -606,9 +615,12 @@ void print_single_command(char *cmd)
         final[3] = '0';
         final[4] = '1';
         final[5] = '0';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -644,9 +656,12 @@ void print_single_command(char *cmd)
         final[3] = '1';
         final[4] = '0';
         final[5] = '0';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -682,9 +697,12 @@ void print_single_command(char *cmd)
         final[3] = '1';
         final[4] = '0';
         final[5] = '1';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -720,9 +738,12 @@ void print_single_command(char *cmd)
         final[3] = '1';
         final[4] = '0';
         final[5] = '0';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
@@ -758,9 +779,12 @@ void print_single_command(char *cmd)
         final[3] = '1';
         final[4] = '0';
         final[5] = '1';
-        par1[0] = cmd[6];
-        par1[1] = cmd[7];
-        int i = 8;
+        while (cmd[i] == ' ')
+        {
+            i++;
+        }
+        par1[0] = cmd[i++];
+        par1[1] = cmd[i++];
         while (cmd[i] == ' ')
         {
             i++;
